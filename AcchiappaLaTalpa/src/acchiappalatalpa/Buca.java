@@ -4,6 +4,7 @@
  */
 package acchiappalatalpa;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 /**
@@ -13,19 +14,23 @@ import javax.swing.JButton;
 public class Buca {
     private JButton bottone;
     private boolean occupata;
+    private ImageIcon talpaImmagine;
 
     public Buca(JButton bottone) {
         this.bottone = bottone;
         this.occupata = false;
+        talpaImmagine = new ImageIcon(getClass().getResource("/images/talpa.jfif"));
     }
 
     public void mostraTalpa() {
         occupata = true;
-        bottone.setText("TALPA!");
+        bottone.setIcon(talpaImmagine);
+        bottone.setText("");
     }
 
     public void nascondiTalpa() {
         occupata = false;
+        bottone.setIcon(null); 
         bottone.setText("");
     }
 
