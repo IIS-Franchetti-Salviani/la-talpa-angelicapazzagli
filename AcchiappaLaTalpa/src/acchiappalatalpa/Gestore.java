@@ -22,7 +22,7 @@ public class Gestore extends Thread{
 
     @Override
     public void run() {
-        while (true) {
+        while(true) {
             try {
                 int indice = random.nextInt(buche.size());
                 Buca buca = buche.get(indice);

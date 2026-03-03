@@ -4,6 +4,8 @@
  */
 package acchiappalatalpa;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author pazzagli.angelica
@@ -12,11 +14,23 @@ public class FormGioco extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FormGioco.class.getName());
 
-    /**
-     * Creates new form FormGioco
-     */
+    private ArrayList<Buca> buche;
+    private Gestore gestore; 
+    
     public FormGioco() {
         initComponents();
+        
+        buche = new ArrayList<>();
+
+        buche.add(new Buca(btnBuca1));
+        buche.add(new Buca(btnBuca2));
+        buche.add(new Buca(btnBuca3));
+        buche.add(new Buca(btnBuca4));
+        buche.add(new Buca(btnBuca5));
+        buche.add(new Buca(btnBuca6));
+
+        gestore = new Gestore(buche);
+        gestore.start();
     }
 
     /**
