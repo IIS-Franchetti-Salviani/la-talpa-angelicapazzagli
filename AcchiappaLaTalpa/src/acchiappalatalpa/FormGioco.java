@@ -80,6 +80,7 @@ public class FormGioco extends javax.swing.JFrame implements Runnable{
         btnBuca2 = new javax.swing.JButton();
         btnBuca5 = new javax.swing.JButton();
         btnBuca4 = new javax.swing.JButton();
+        lblTitPunteggio = new javax.swing.JLabel();
         lblPunteggio = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -91,9 +92,51 @@ public class FormGioco extends javax.swing.JFrame implements Runnable{
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("ACCHIAPPA LA TALPA!");
 
+        btnBuca1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuca1ActionPerformed(evt);
+            }
+        });
+
+        btnBuca6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuca6ActionPerformed(evt);
+            }
+        });
+
+        btnBuca3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuca3ActionPerformed(evt);
+            }
+        });
+
+        btnBuca2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuca2ActionPerformed(evt);
+            }
+        });
+
+        btnBuca5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuca5ActionPerformed(evt);
+            }
+        });
+
+        btnBuca4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuca4ActionPerformed(evt);
+            }
+        });
+
+        lblTitPunteggio.setFont(new java.awt.Font("Serif", 3, 18)); // NOI18N
+        lblTitPunteggio.setForeground(new java.awt.Color(255, 255, 255));
+        lblTitPunteggio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitPunteggio.setText("PUNTEGGIO:");
+
         lblPunteggio.setFont(new java.awt.Font("Serif", 3, 18)); // NOI18N
         lblPunteggio.setForeground(new java.awt.Color(255, 255, 255));
-        lblPunteggio.setText("PUNTEGGIO: 0");
+        lblPunteggio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPunteggio.setText("0");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -118,8 +161,10 @@ public class FormGioco extends javax.swing.JFrame implements Runnable{
                         .addGap(95, 95, 95)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(237, 237, 237)
-                        .addComponent(lblPunteggio, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(202, 202, 202)
+                        .addComponent(lblTitPunteggio)
+                        .addGap(28, 28, 28)
+                        .addComponent(lblPunteggio, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(70, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -127,9 +172,11 @@ public class FormGioco extends javax.swing.JFrame implements Runnable{
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblPunteggio)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTitPunteggio)
+                    .addComponent(lblPunteggio))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBuca1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuca2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -155,6 +202,30 @@ public class FormGioco extends javax.swing.JFrame implements Runnable{
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBuca1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuca1ActionPerformed
+        gestore.colpisciBuca(0);
+    }//GEN-LAST:event_btnBuca1ActionPerformed
+
+    private void btnBuca2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuca2ActionPerformed
+        gestore.colpisciBuca(1);
+    }//GEN-LAST:event_btnBuca2ActionPerformed
+
+    private void btnBuca3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuca3ActionPerformed
+        gestore.colpisciBuca(2);
+    }//GEN-LAST:event_btnBuca3ActionPerformed
+
+    private void btnBuca4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuca4ActionPerformed
+        gestore.colpisciBuca(3);
+    }//GEN-LAST:event_btnBuca4ActionPerformed
+
+    private void btnBuca5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuca5ActionPerformed
+        gestore.colpisciBuca(4);
+    }//GEN-LAST:event_btnBuca5ActionPerformed
+
+    private void btnBuca6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuca6ActionPerformed
+        gestore.colpisciBuca(5);
+    }//GEN-LAST:event_btnBuca6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -191,5 +262,6 @@ public class FormGioco extends javax.swing.JFrame implements Runnable{
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblPunteggio;
+    private javax.swing.JLabel lblTitPunteggio;
     // End of variables declaration//GEN-END:variables
 }
