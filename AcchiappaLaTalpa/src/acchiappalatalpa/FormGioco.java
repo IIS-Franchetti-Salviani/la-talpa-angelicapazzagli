@@ -94,6 +94,10 @@ public class FormGioco extends javax.swing.JFrame implements Runnable{
         threadForm = new Thread(this);
         threadForm.start();
     }
+    
+    public int getTempoRimanente() {
+        return tempo;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -347,7 +351,8 @@ public class FormGioco extends javax.swing.JFrame implements Runnable{
                  + "2. Appare una talpa casualmente in una delle 6 buche.\n"
                  + "3. Clicca sulla talpa per guadagnare 1 punto.\n"
                  + "4. La partita dura 30 secondi.\n"
-                 + "5. Il record massimo viene salvato automaticamente.\n\n";
+                 + "5. Ogni 10 secondi la velocità della talpa aumenta.\n"
+                 + "6. Il record massimo viene salvato automaticamente.\n\n";
     
         JOptionPane.showMessageDialog(this, testo, "Regole del Gioco", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnRegoleActionPerformed

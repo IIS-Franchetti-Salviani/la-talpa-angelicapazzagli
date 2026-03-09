@@ -16,6 +16,9 @@ public class Talpa extends Thread {
     private Random random;
     private Scambio scambio;
     private FormGioco form;
+    
+    private int tempoVisibile = 1000;
+    private int pausa = 500; 
 
     public Talpa(Gestore gestore, Scambio scambio, FormGioco form) {
         this.gestore = gestore;
@@ -33,18 +36,27 @@ public class Talpa extends Thread {
                     Thread.sleep(200);
                     continue;
                 }
+                int tempoRimanente = form.getTempoRimanente();
+                if (tempoRimanente <= 20) {
+                    pausa = 300;
+                    tempoVisibile = 800;
+                }
+                if (tempoRimanente <= 10) {
+                    pausa = 150;
+                    tempoVisibile = 600;
+                }
                 int indice = random.nextInt(buche.size());
                 Buca b = buche.get(indice);
-                if(!b.presenzaTalpa()){
+                if (!b.presenzaTalpa()) {
                     b.mostraTalpa();
                     scambio.mostraTalpa(indice);
-                    Thread.sleep(1000);
-                    if(b.presenzaTalpa()){
+                    Thread.sleep(tempoVisibile);
+                    if(b.presenzaTalpa()) {
                         b.nascondiTalpa();
                         scambio.nascondiTalpa(indice);
                     }
                 }
-                Thread.sleep(500);
+                Thread.sleep(pausa);
             }
             catch(Exception e){ }
         }
