@@ -22,4 +22,8 @@ public class Scambio {
     public void nascondiTalpa(int indice) {
         form.nascondiTalpa(indice);
     }
+    
+    public void aggiornaPunteggio(int punteggio){
+        form.aggiornaPunteggio(punteggio);
+    }
 }

@@ -5,36 +5,33 @@
 package acchiappalatalpa;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  *
  * @author pazzagli.angelica
  */
-public class Gestore extends Thread{
+public class Gestore {
     private ArrayList<Buca> buche;
-    private Random random;
+    private int punteggio;
+    private Scambio scambio;
 
-    public Gestore(ArrayList<Buca> buche) {
+    public Gestore(ArrayList<Buca> buche, Scambio scambio) {
         this.buche = buche;
-        this.random = new Random();
+        this.scambio = scambio;
+        punteggio = 0;
     }
 
-    @Override
-    public void run() {
-        while(true) {
-            try {
-                int indice = random.nextInt(buche.size());
-                Buca buca = buche.get(indice);
-                if (!buca.presenzaTalpa()) {
-                    buca.mostraTalpa();
-                    Thread.sleep(1000);
-                    buca.nascondiTalpa();
-                }
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+    public ArrayList<Buca> getBuche() {
+        return buche;
+    }
+
+    public synchronized void colpisciBuca(int indice) {
+        Buca b = buche.get(indice);
+        if(b.presenzaTalpa()){
+            b.nascondiTalpa();
+            punteggio++;
+            scambio.aggiornaPunteggio(punteggio);
+            scambio.nascondiTalpa(indice);
         }
     }
 }

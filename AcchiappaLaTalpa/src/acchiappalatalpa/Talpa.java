@@ -12,34 +12,35 @@ import java.util.Random;
  * @author pazzagli.angelica
  */
 public class Talpa extends Thread {
-    private ArrayList<Buca> buche;
+    private Gestore gestore;
     private Random random;
     private Scambio scambio;
 
-    public Talpa(ArrayList<Buca> buche, Scambio scambio) {
-        this.buche = buche;
+    public Talpa(Gestore gestore, Scambio scambio) {
+        this.gestore = gestore;
         this.scambio = scambio;
         random = new Random();
     }
 
     @Override
     public void run() {
-        while(true) {
-            try {
+        ArrayList<Buca> buche = gestore.getBuche();
+        while(true){
+            try{
                 int indice = random.nextInt(buche.size());
                 Buca b = buche.get(indice);
-                if(!b.presenzaTalpa()) {
+                if(!b.presenzaTalpa()){
                     b.mostraTalpa();
                     scambio.mostraTalpa(indice);
                     Thread.sleep(1000);
-                    b.nascondiTalpa();
-                    scambio.nascondiTalpa(indice);
+                    if(b.presenzaTalpa()){
+                        b.nascondiTalpa();
+                        scambio.nascondiTalpa(indice);
+                    }
                 }
                 Thread.sleep(500);
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
+            catch(Exception e){ }
         }
     }
 }
