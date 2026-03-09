@@ -5,6 +5,8 @@
 package acchiappalatalpa;
 
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 
 /**
  *
@@ -15,24 +17,35 @@ public class FormGioco extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FormGioco.class.getName());
 
     private ArrayList<Buca> buche;
-    private Gestore gestore; 
+    private Talpa talpa;
+    private Scambio scambio;
+    private JButton[] bottoni;
     
     public FormGioco() {
         initComponents();
         
+        bottoni = new JButton[]{btnBuca1, btnBuca2, btnBuca3, btnBuca4, btnBuca5, btnBuca6};
         buche = new ArrayList<>();
 
-        buche.add(new Buca(btnBuca1));
-        buche.add(new Buca(btnBuca2));
-        buche.add(new Buca(btnBuca3));
-        buche.add(new Buca(btnBuca4));
-        buche.add(new Buca(btnBuca5));
-        buche.add(new Buca(btnBuca6));
+        for (int i = 0; i < 6; i++) {
+            buche.add(new Buca());
+        }
+        scambio = new Scambio(this);
 
-        gestore = new Gestore(buche);
-        gestore.start();
+        talpa = new Talpa(buche, scambio);
+        talpa.start();
+    }
+    
+    public void mostraTalpa(int indice) {
+        ImageIcon talpa = new ImageIcon(getClass().getResource("/images/talpa.jfif"));
+        bottoni[indice].setIcon(talpa);
+        bottoni[indice].setText("");
     }
 
+    public void nascondiTalpa(int indice) {
+        bottoni[indice].setIcon(null);
+        bottoni[indice].setText("");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
