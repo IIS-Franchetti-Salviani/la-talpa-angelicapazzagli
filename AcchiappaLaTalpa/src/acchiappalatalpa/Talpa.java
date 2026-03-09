@@ -15,10 +15,12 @@ public class Talpa extends Thread {
     private Gestore gestore;
     private Random random;
     private Scambio scambio;
+    private FormGioco form;
 
-    public Talpa(Gestore gestore, Scambio scambio) {
+    public Talpa(Gestore gestore, Scambio scambio, FormGioco form) {
         this.gestore = gestore;
         this.scambio = scambio;
+        this.form = form;
         random = new Random();
     }
 
@@ -27,6 +29,10 @@ public class Talpa extends Thread {
         ArrayList<Buca> buche = gestore.getBuche();
         while(true){
             try{
+                if (!form.inCorso) {
+                    Thread.sleep(200);
+                    continue;
+                }
                 int indice = random.nextInt(buche.size());
                 Buca b = buche.get(indice);
                 if(!b.presenzaTalpa()){

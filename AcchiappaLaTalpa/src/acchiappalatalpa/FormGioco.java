@@ -7,6 +7,7 @@ package acchiappalatalpa;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -23,6 +24,10 @@ public class FormGioco extends javax.swing.JFrame implements Runnable{
     private JButton[] bottoni;
     private Thread threadForm;
     
+    private int tempo;
+    private int record; 
+    public boolean inCorso; 
+    
     public FormGioco() {
         initComponents();
         
@@ -35,7 +40,7 @@ public class FormGioco extends javax.swing.JFrame implements Runnable{
         
         scambio = new Scambio(this);
         gestore = new Gestore(buche, scambio);
-        talpa = new Talpa(gestore, scambio);
+        talpa = new Talpa(gestore, scambio, this);
         talpa.start();
 
         threadForm = new Thread(this);
@@ -57,11 +62,36 @@ public class FormGioco extends javax.swing.JFrame implements Runnable{
     
     @Override
     public void run() {
-        while(true){
-            try{
-                Thread.sleep(100);
-            }catch(Exception e){}
+        while (inCorso) {
+            try {
+                Thread.sleep(1000); 
+                tempo--;
+                SwingUtilities.invokeLater(() -> lblTempo.setText(String.valueOf(tempo)));
+                if (tempo <= 0) {
+                    inCorso = false;
+                    if (gestore.getPunteggio() > record) {
+                        record = gestore.getPunteggio();
+                        SwingUtilities.invokeLater(() -> lblRecord.setText(String.valueOf(record)));
+                    }
+                    SwingUtilities.invokeLater(() -> {
+                        for (int i = 0; i < bottoni.length; i++)
+                            bottoni[i].setIcon(null);
+                    });
+                    break;
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+    }
+    
+    private void startGioco() {
+        tempo = 30;  
+        inCorso = true;    
+        gestore.resetPunteggio(); 
+        lblTempo.setText(String.valueOf(tempo));
+        threadForm = new Thread(this);
+        threadForm.start();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -82,6 +112,11 @@ public class FormGioco extends javax.swing.JFrame implements Runnable{
         btnBuca4 = new javax.swing.JButton();
         lblTitPunteggio = new javax.swing.JLabel();
         lblPunteggio = new javax.swing.JLabel();
+        btnStart = new javax.swing.JButton();
+        lblTitTempo = new javax.swing.JLabel();
+        lblTempo = new javax.swing.JLabel();
+        lblTitTempo1 = new javax.swing.JLabel();
+        lblRecord = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -138,6 +173,35 @@ public class FormGioco extends javax.swing.JFrame implements Runnable{
         lblPunteggio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblPunteggio.setText("0");
 
+        btnStart.setBackground(new java.awt.Color(153, 255, 153));
+        btnStart.setFont(new java.awt.Font("Serif", 3, 18)); // NOI18N
+        btnStart.setText("START");
+        btnStart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStartActionPerformed(evt);
+            }
+        });
+
+        lblTitTempo.setFont(new java.awt.Font("Serif", 3, 18)); // NOI18N
+        lblTitTempo.setForeground(new java.awt.Color(255, 255, 255));
+        lblTitTempo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitTempo.setText("TEMPO RIMANENTE:");
+
+        lblTempo.setFont(new java.awt.Font("Serif", 3, 18)); // NOI18N
+        lblTempo.setForeground(new java.awt.Color(255, 255, 255));
+        lblTempo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTempo.setText("0");
+
+        lblTitTempo1.setFont(new java.awt.Font("Serif", 3, 18)); // NOI18N
+        lblTitTempo1.setForeground(new java.awt.Color(255, 255, 255));
+        lblTitTempo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitTempo1.setText("RECORD:");
+
+        lblRecord.setFont(new java.awt.Font("Serif", 3, 18)); // NOI18N
+        lblRecord.setForeground(new java.awt.Color(255, 255, 255));
+        lblRecord.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblRecord.setText("0");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -145,38 +209,59 @@ public class FormGioco extends javax.swing.JFrame implements Runnable{
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(53, 53, 53)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnBuca4, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBuca1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(101, 101, 101)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnBuca5, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBuca2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(101, 101, 101)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnBuca3, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBuca6, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(95, 95, 95)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(202, 202, 202)
-                        .addComponent(lblTitPunteggio)
-                        .addGap(28, 28, 28)
-                        .addComponent(lblPunteggio, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(70, Short.MAX_VALUE))
+                        .addGap(47, 47, 47)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btnBuca4, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnBuca1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(101, 101, 101)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btnBuca5, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnBuca2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(101, 101, 101)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btnBuca3, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnBuca6, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(174, 174, 174)
+                                .addComponent(btnStart, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(249, 249, 249)
+                        .addComponent(lblTitTempo1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(182, 182, 182)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(43, 43, 43)
+                                .addComponent(lblTitPunteggio)
+                                .addGap(28, 28, 28)
+                                .addComponent(lblPunteggio, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblTitTempo)
+                                .addGap(27, 27, 27)
+                                .addComponent(lblTempo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addGap(33, 33, 33)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTitPunteggio)
                     .addComponent(lblPunteggio))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTitTempo)
+                    .addComponent(lblTempo))
+                .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBuca1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuca2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -186,7 +271,13 @@ public class FormGioco extends javax.swing.JFrame implements Runnable{
                     .addComponent(btnBuca4, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuca5, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuca6, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29))
+                .addGap(18, 18, 18)
+                .addComponent(btnStart)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTitTempo1)
+                    .addComponent(lblRecord))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -227,6 +318,10 @@ public class FormGioco extends javax.swing.JFrame implements Runnable{
         gestore.colpisciBuca(5);
     }//GEN-LAST:event_btnBuca6ActionPerformed
 
+    private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
+        startGioco();
+    }//GEN-LAST:event_btnStartActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -259,9 +354,14 @@ public class FormGioco extends javax.swing.JFrame implements Runnable{
     private javax.swing.JButton btnBuca4;
     private javax.swing.JButton btnBuca5;
     private javax.swing.JButton btnBuca6;
+    private javax.swing.JButton btnStart;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblPunteggio;
+    private javax.swing.JLabel lblRecord;
+    private javax.swing.JLabel lblTempo;
     private javax.swing.JLabel lblTitPunteggio;
+    private javax.swing.JLabel lblTitTempo;
+    private javax.swing.JLabel lblTitTempo1;
     // End of variables declaration//GEN-END:variables
 }

@@ -34,4 +34,13 @@ public class Gestore {
             scambio.nascondiTalpa(indice);
         }
     }
+    
+    public synchronized void resetPunteggio() {
+        punteggio = 0;
+        scambio.aggiornaPunteggio(punteggio);
+    }
+    
+    public synchronized int getPunteggio() {
+        return punteggio;
+    }
 }
