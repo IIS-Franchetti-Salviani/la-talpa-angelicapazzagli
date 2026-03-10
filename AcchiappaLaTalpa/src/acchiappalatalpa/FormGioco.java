@@ -49,7 +49,7 @@ public class FormGioco extends javax.swing.JFrame implements Runnable{
     }
     
     public void mostraTalpa(int indice){
-        ImageIcon talpa = new ImageIcon(getClass().getResource("/images/talpa.jfif"));
+        ImageIcon talpa = new ImageIcon(getClass().getResource("/images/talpa.png"));
         bottoni[indice].setIcon(talpa);
     }
 
@@ -70,6 +70,7 @@ public class FormGioco extends javax.swing.JFrame implements Runnable{
                 SwingUtilities.invokeLater(() -> lblTempo.setText(String.valueOf(tempo)));
                 if (tempo <= 0) {
                     inCorso = false;
+                    btnStart.setEnabled(true);
                     if (gestore.getPunteggio() > record) {
                         record = gestore.getPunteggio();
                         SwingUtilities.invokeLater(() -> lblRecord.setText(String.valueOf(record)));
@@ -133,36 +134,42 @@ public class FormGioco extends javax.swing.JFrame implements Runnable{
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("ACCHIAPPA LA TALPA!");
 
+        btnBuca1.setBackground(new java.awt.Color(86, 68, 23));
         btnBuca1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuca1ActionPerformed(evt);
             }
         });
 
+        btnBuca6.setBackground(new java.awt.Color(86, 68, 23));
         btnBuca6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuca6ActionPerformed(evt);
             }
         });
 
+        btnBuca3.setBackground(new java.awt.Color(86, 68, 23));
         btnBuca3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuca3ActionPerformed(evt);
             }
         });
 
+        btnBuca2.setBackground(new java.awt.Color(86, 68, 23));
         btnBuca2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuca2ActionPerformed(evt);
             }
         });
 
+        btnBuca5.setBackground(new java.awt.Color(86, 68, 23));
         btnBuca5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuca5ActionPerformed(evt);
             }
         });
 
+        btnBuca4.setBackground(new java.awt.Color(86, 68, 23));
         btnBuca4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuca4ActionPerformed(evt);
@@ -342,6 +349,7 @@ public class FormGioco extends javax.swing.JFrame implements Runnable{
 
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
         startGioco();
+        btnStart.setEnabled(false);
     }//GEN-LAST:event_btnStartActionPerformed
 
     private void btnRegoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegoleActionPerformed
